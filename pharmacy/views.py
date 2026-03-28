@@ -1,4 +1,4 @@
-# campuscare/pharmacy/views.py — Step 7
+
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.exceptions import PermissionDenied, ValidationError

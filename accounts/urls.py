@@ -1,4 +1,4 @@
-# campuscare/accounts/urls.py — Step 2
+
 from django.urls import path
 
 from accounts.views import (
