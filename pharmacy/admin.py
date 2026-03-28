@@ -1,4 +1,4 @@
-# campuscare/pharmacy/admin.py — Step 7
+
 from django.contrib import admin
 
 from pharmacy.models import DispenseRecord

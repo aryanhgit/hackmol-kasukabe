@@ -1,4 +1,4 @@
-# campuscare/pharmacy/urls.py — Step 7
+
 from django.urls import path
 
 from pharmacy.views import DispensePrescriptionView, DispenseQueueView, ReceiptDetailView

@@ -1,4 +1,4 @@
-# campuscare/pharmacy/models.py — Step 7
+
 import uuid
 
 from django.core.exceptions import ValidationError
