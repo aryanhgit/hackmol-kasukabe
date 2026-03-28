@@ -1,4 +1,4 @@
-# campuscare/consultation/admin.py — Step 6
+
 from django.contrib import admin
 
 from consultation.models import DoctorProfile, Prescription, PrescriptionMedicine
