@@ -21,9 +21,13 @@ class BookingError(ValidationError):
 
 
 def build_token_expiry(slot: Slot) -> datetime:
-    """Calculate the token expiry timestamp for a slot."""
-    slot_start = timezone.make_aware(datetime.combine(slot.date, slot.start_time))
-    return slot_start + timedelta(minutes=SLOT_GRACE_MINUTES)
+    """Expire slot after its END time (not start time)."""
+    slot_end = datetime.combine(slot.date, slot.end_time)
+
+    if timezone.is_naive(slot_end):
+        slot_end = timezone.make_aware(slot_end, timezone.get_current_timezone())
+
+    return slot_end - timedelta(minutes=20)
 
 
 def render_qr_image(token: Token) -> str:
