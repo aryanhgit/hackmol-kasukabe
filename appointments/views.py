@@ -1,7 +1,7 @@
-# campuscare/appointments/views.py — Step 5
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.core.exceptions import PermissionDenied
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse
@@ -9,7 +9,7 @@ from django.utils import timezone
 from django.views.generic import FormView, ListView, TemplateView
 
 from accounts.models import UserProfile
-from appointments.forms import SlotBookingForm
+from appointments.forms import SlotBookingForm, SlotCreateForm
 from appointments.models import Slot, Token
 from appointments.services import (
     BookingError,
@@ -39,16 +39,37 @@ class SlotListView(LoginRequiredMixin, RoleRequiredMixin, ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         profile = self.request.user.profile
+        is_admin = profile.role == UserProfile.Role.ADMIN
+        is_student = profile.role == UserProfile.Role.STUDENT
         context['active_token'] = get_active_token(profile) if profile.role == UserProfile.Role.STUDENT else None
         context['slot_cards'] = [
             {
                 'slot': slot,
                 'bookable': is_slot_bookable(slot),
-                'booking_note': slot_booking_note(slot),
+                'booking_note': (
+                    'Open for student booking.' if is_admin and is_slot_bookable(slot) else slot_booking_note(slot)
+                ),
             }
             for slot in context['slots']
         ]
+        context['is_admin'] = is_admin
+        context['is_student'] = is_student
+        context['slot_form'] = kwargs.get('slot_form', SlotCreateForm(prefix='slot')) if is_admin else None
         return context
+
+    def post(self, request, *args, **kwargs):
+        if request.user.profile.role != UserProfile.Role.ADMIN:
+            raise PermissionDenied
+
+        self.object_list = self.get_queryset()
+        slot_form = SlotCreateForm(request.POST, prefix='slot')
+
+        if slot_form.is_valid():
+            slot = slot_form.save()
+            messages.success(request, f'Slot "{slot.title}" was created successfully.')
+            return redirect(reverse('appointments:slot_list'))
+
+        return self.render_to_response(self.get_context_data(slot_form=slot_form))
 
 
 class BookSlotView(LoginRequiredMixin, RoleRequiredMixin, FormView):
