@@ -458,6 +458,17 @@ body.campuscare-shell--print {
   background: rgba(255, 255, 255, 0.88);
 }
 
+.appointments-page__notice--form form button {
+  appearance: none;
+  border: none;
+  border-radius: 999px;
+  padding: 0.8rem 1.25rem;
+  background: linear-gradient(135deg, var(--campuscare-accent), #0f5e7d);
+  color: #ffffff;
+  font-weight: 700;
+  cursor: pointer;
+}
+
 .slot-card {
   display: flex;
   flex-direction: column;
