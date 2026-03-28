@@ -41,7 +41,9 @@
         {% if selected_prescription %}
           <div class="pharmacy-page__summary">
             <h3>Prescription review</h3>
+            <p><strong>Token:</strong> {{ selected_prescription.token.token_code }}</p>
             <p><strong>Student:</strong> {{ selected_prescription.token.student.user.get_full_name|default:selected_prescription.token.student.user.username|escape }}</p>
+            <p><strong>Roll No:</strong> {{ selected_prescription.token.student.roll_number }}</p>
             <p><strong>Doctor:</strong> {{ selected_prescription.doctor.user.get_full_name|default:selected_prescription.doctor.user.username|escape }}</p>
             <p><strong>Symptoms:</strong> {{ selected_prescription.symptoms|escape }}</p>
           </div>
