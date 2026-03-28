@@ -32,27 +32,25 @@
           <article class="calendar-grid__day{% if not day.in_current_month %} calendar-grid__day--muted{% endif %}{% if day.is_today %} calendar-grid__day--today{% endif %}" role="cell">
             <div class="calendar-grid__day-top">
               <span class="calendar-grid__day-number">{{ day.day_number }}</span>
-              {% if day.schedule %}
-                {% if day.schedule.is_open %}
+              {% if day.schedule.is_open %}
+                {% if day.has_custom_schedule %}
                   <span class="calendar-grid__status calendar-grid__status--open">Open</span>
                 {% else %}
-                  <span class="calendar-grid__status calendar-grid__status--closed">Closed</span>
+                  <span class="calendar-grid__status calendar-grid__status--unset">Default</span>
                 {% endif %}
               {% else %}
-                <span class="calendar-grid__status calendar-grid__status--unset">Unset</span>
+                <span class="calendar-grid__status calendar-grid__status--closed">Closed</span>
               {% endif %}
             </div>
-            {% if day.schedule %}
-              {% if day.schedule.is_open %}
-                <p class="calendar-grid__detail">
-                  {{ day.schedule.open_time|time:"g:i A"|escape }} to {{ day.schedule.close_time|time:"g:i A"|escape }}
-                </p>
-              {% endif %}
-              {% if day.schedule.note %}
-                <p class="calendar-grid__note">{{ day.schedule.note|escape }}</p>
-              {% endif %}
+            {% if day.schedule.is_open %}
+              <p class="calendar-grid__detail">
+                {{ day.schedule.open_time|time:"g:i A"|escape }} to {{ day.schedule.close_time|time:"g:i A"|escape }}
+              </p>
             {% else %}
-              <p class="calendar-grid__detail">No schedule published.</p>
+              <p class="calendar-grid__detail">Dispensary closed for this day.</p>
+            {% endif %}
+            {% if day.schedule.note %}
+              <p class="calendar-grid__note">{{ day.schedule.note|escape }}</p>
             {% endif %}
             {% if_role 'admin' %}
               <a class="calendar-grid__manage" href="{% url 'calendar:manage' %}?date={{ day.date|date:'Y-m-d' }}">Edit day</a>

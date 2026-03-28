@@ -25,6 +25,13 @@
       </section>
 
       <aside class="schedule-page__panel schedule-page__panel--aside">
+        <h3>Default day</h3>
+        <p>
+          Open {{ default_schedule_preview.open_time|time:"g:i A"|escape }} to
+          {{ default_schedule_preview.close_time|time:"g:i A"|escape }}
+        </p>
+        <p>{{ default_schedule_preview.note|escape }}</p>
+
         <h3>Recent updates</h3>
         {% if recent_schedules %}
           <ul class="schedule-page__list">
@@ -45,12 +52,19 @@
           <p>No schedule entries have been created yet.</p>
         {% endif %}
 
-        {% if existing_schedule and existing_schedule.note %}
-          <div class="schedule-page__note">
-            <strong>Current note:</strong>
-            <p>{{ existing_schedule.note|escape }}</p>
-          </div>
-        {% endif %}
+        <div class="schedule-page__note">
+          {% if existing_schedule %}
+            <strong>Current override:</strong>
+            {% if existing_schedule.note %}
+              <p>{{ existing_schedule.note|escape }}</p>
+            {% else %}
+              <p>This date has a custom saved schedule.</p>
+            {% endif %}
+          {% else %}
+            <strong>No custom override yet.</strong>
+            <p>This date is currently using the default day shown above.</p>
+          {% endif %}
+        </div>
       </aside>
     </div>
   </section>
