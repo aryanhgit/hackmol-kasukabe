@@ -7,6 +7,7 @@ from django.urls import reverse
 from django.utils import timezone
 
 from calendar_app.models import DispensarySchedule
+from core.constants import DEFAULT_DISPENSARY_CLOSE_TIME, DEFAULT_DISPENSARY_OPEN_TIME
 from core.context_processors import dispensary_status
 
 User = get_user_model()
@@ -56,6 +57,8 @@ class CalendarScheduleTests(TestCase):
         response = self.client.get(reverse('calendar:month'))
 
         self.assertContains(response, 'Dispensary calendar')
+        self.assertContains(response, 'Default')
+        self.assertContains(response, '9:00 AM to 5:00 PM')
 
     def test_manage_view_is_restricted_to_admins(self):
         user = User.objects.create_user(username='student-user', password='safe-pass-123')
@@ -86,3 +89,18 @@ class CalendarScheduleTests(TestCase):
 
         self.assertEqual(response.status_code, 302)
         self.assertEqual(DispensarySchedule.objects.count(), 1)
+
+    def test_manage_view_prefills_default_hours_for_unsaved_day(self):
+        admin_user = User.objects.create_superuser(
+            username='calendar-admin-defaults',
+            email='calendar-admin-defaults@example.com',
+            password='safe-pass-123',
+        )
+        self.client.force_login(admin_user)
+
+        response = self.client.get(reverse('calendar:manage'))
+
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.context['form'].initial['open_time'], DEFAULT_DISPENSARY_OPEN_TIME)
+        self.assertEqual(response.context['form'].initial['close_time'], DEFAULT_DISPENSARY_CLOSE_TIME)
+        self.assertContains(response, 'No custom override yet.')
