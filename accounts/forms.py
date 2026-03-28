@@ -21,12 +21,9 @@ class RegistrationForm(UserCreationForm):
     first_name = forms.CharField(max_length=150)
     last_name = forms.CharField(max_length=150)
     email = forms.EmailField()
-    phone = forms.CharField(max_length=20, required=False)
-
-    # TODO FIX THIS:
     roll_number = forms.CharField(max_length=30, required=False)
+    phone = forms.CharField(max_length=20, required=False)
     year_of_study = forms.IntegerField(min_value=1, max_value=8, required=False)
-    
 
     class Meta(UserCreationForm.Meta):
         model = User

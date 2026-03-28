@@ -11,7 +11,7 @@ from django.views.generic import CreateView, TemplateView
 
 from accounts.forms import RegistrationForm
 from accounts.models import UserProfile
-# from core.decorators import RoleRequiredMixin
+from core.decorators import RoleRequiredMixin
 
 
 class RegistrationView(CreateView):
