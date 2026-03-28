@@ -1,4 +1,4 @@
-# campuscare/inventory/urls.py — Step 8
+
 from django.urls import path
 
 from inventory.views import LowStockAlertView, StockCreateView, StockListView, StockUpdateView
