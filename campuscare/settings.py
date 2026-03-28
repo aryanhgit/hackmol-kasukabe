@@ -67,7 +67,6 @@ INSTALLED_APPS = [
     'inventory.apps.InventoryConfig',
     'calendar_app.apps.CalendarAppConfig',
     'analytics.apps.AnalyticsConfig',
-    'ml.apps.MlConfig',
 ]
 
 MIDDLEWARE = [
