@@ -1,0 +1,26 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}CampusCare{% endblock %}</title>
+</head>
+<body>
+  <header>
+    <h1>CampusCare</h1>
+  </header>
+  {% if messages %}
+    <section aria-label="Messages">
+      <ul>
+        {% for message in messages %}
+          <li>{{ message|escape }}</li>
+        {% endfor %}
+      </ul>
+    </section>
+  {% endif %}
+  <main>
+    {% block content %}{% endblock %}
+  </main>
+</body>
+</html>
