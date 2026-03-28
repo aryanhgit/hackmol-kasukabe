@@ -1,7 +1,7 @@
 # campuscare/analytics/urls.py — Step 10
 from django.urls import path
 
-from analytics.views import EtaView, HistoryView, PredictionPanelView, TriageView
+from analytics.views import EtaView, HistoryView, TriageView
 
 app_name = 'analytics'
 

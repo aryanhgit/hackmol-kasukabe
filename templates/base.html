@@ -46,13 +46,11 @@
                 <a class="campuscare-navbar__link" href="{% url 'inventory:list' %}">Inventory</a>
               {% endif_role %}
               {% if_role 'admin' %}
-                <a class="campuscare-navbar__link" href="{% url 'analytics:predict' %}">Predictions</a>
                 <a class="campuscare-navbar__link" href="{% url 'admin:index' %}">Admin</a>
               {% endif_role %}
               <span class="campuscare-navbar__role">{{ request.user.profile.get_role_display|escape }}</span>
             {% else %}
               <a class="campuscare-navbar__link" href="{% url 'accounts:login' %}">Login</a>
-              <a class="campuscare-navbar__link campuscare-navbar__link--accent" href="{% url 'accounts:register' %}">Register</a>
             {% endif %}
           </div>
         </div>
