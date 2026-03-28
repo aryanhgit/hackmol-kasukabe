@@ -45,10 +45,17 @@ def dispensary_status(request) -> dict[str, dict[str, str | bool]]:
         }
 
     if schedule.is_open:
+        detail = schedule.note
+        if not detail and schedule.open_time and schedule.close_time:
+            detail = (
+                f"Open {schedule.open_time.strftime('%I:%M %p').lstrip('0')} "
+                f"to {schedule.close_time.strftime('%I:%M %p').lstrip('0')}"
+            )
+        detail = detail or DISPENSARY_DETAIL_OPEN
         return {
             'dispensary_status': {
                 'label': DISPENSARY_STATUS_OPEN,
-                'detail': DISPENSARY_DETAIL_OPEN,
+                'detail': detail,
                 'badge_class': DISPENSARY_BADGE_OPEN,
                 'is_open': True,
             }
