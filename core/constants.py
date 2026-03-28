@@ -1,3 +1,4 @@
+# campuscare/core/constants.py — Step 8
 from decouple import config
 
 DISPENSARY_STATUS_OPEN = 'Open today'
@@ -16,3 +17,4 @@ MONTHLY_MEDICINE_QUOTA = config('MONTHLY_MEDICINE_QUOTA', default=5, cast=int)
 SLOT_GRACE_MINUTES = config('SLOT_GRACE_MINUTES', default=15, cast=int)
 AVG_CONSULT_MINUTES = config('AVG_CONSULT_MINUTES', default=7, cast=int)
 QUEUE_POLL_INTERVAL_MS = 15000
+LOW_STOCK_THRESHOLD = config('LOW_STOCK_THRESHOLD', default=5, cast=int)
