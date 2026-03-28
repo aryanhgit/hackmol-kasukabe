@@ -9,7 +9,7 @@ from django.shortcuts import redirect
 from django.urls import reverse, reverse_lazy
 from django.views.generic import CreateView, TemplateView
 
-from accounts.forms import RegistrationForm
+from accounts.forms import RegistrationForm, StudentRegistrationForm
 from accounts.models import UserProfile
 from core.decorators import RoleRequiredMixin
 
@@ -18,19 +18,36 @@ class RegistrationView(CreateView):
     """Register a new user, create the profile, and sign them in."""
 
     form_class = RegistrationForm
-    template_name = 'accounts/register.html'
+    template_name = 'accounts/register_doctor_pharma.html'
     success_url = reverse_lazy('accounts:dashboard')
 
     def dispatch(self, request, *args, **kwargs):
-        if request.user.is_authenticated:
+        if not request.user.is_authenticated or request.user.profile.role != UserProfile.Role.ADMIN:
             return redirect('accounts:dashboard')
         return super().dispatch(request, *args, **kwargs)
 
     def form_valid(self, form):
         user = form.save()
         self.object = user
-        login(self.request, user)
-        messages.success(self.request, 'Your CampusCare account has been created.')
+
+        messages.success(self.request, 'Registration successful.')
+        return HttpResponseRedirect(self.get_success_url())
+    
+class StudentRegistrationView(CreateView):
+    form_class = StudentRegistrationForm
+    template_name = 'accounts/register_student.html'
+    success_url = reverse_lazy('accounts:dashboard')
+
+    def dispatch(self, request, *args, **kwargs):
+        if not request.user.is_authenticated or request.user.profile.role != UserProfile.Role.ADMIN:
+            return redirect('accounts:dashboard')
+        return super().dispatch(request, *args, **kwargs)
+
+    def form_valid(self, form):
+        user = form.save()
+        self.object = user
+
+        messages.success(self.request, 'Student registered successfully.')
         return HttpResponseRedirect(self.get_success_url())
 
 
@@ -68,26 +85,26 @@ class DashboardRedirectView(LoginRequiredMixin, RoleRequiredMixin, TemplateView)
             UserProfile.Role.STUDENT: {
                 'heading': 'Student dashboard',
                 'summary': 'Book appointments and follow your token status as those modules come online.',
-                'primary_action_label': None,
-                'primary_action_url': None,
+                'actions': [],
             },
             UserProfile.Role.DOCTOR: {
                 'heading': 'Doctor dashboard',
                 'summary': 'Consultation tools will appear in the next steps. Your account is ready now.',
-                'primary_action_label': None,
-                'primary_action_url': None,
+                'actions': [],
             },
             UserProfile.Role.PHARMACIST: {
                 'heading': 'Pharmacist dashboard',
                 'summary': 'Dispense and inventory tools will be connected in later steps.',
-                'primary_action_label': None,
-                'primary_action_url': None,
+                'actions': [],
             },
             UserProfile.Role.ADMIN: {
                 'heading': 'Admin dashboard',
                 'summary': 'Use the Django admin while calendar, inventory, and analytics modules are added.',
-                'primary_action_label': 'Open admin',
-                'primary_action_url': reverse('admin:index'),
+                'actions': [
+                    {'label': 'Open Admin', 'url': reverse('admin:index')},
+                    {'label': 'Register Student', 'url': reverse('accounts:register_student')},
+                    {'label': 'Register Doctor/Pharmacist', 'url': reverse('accounts:register')},
+                ],
             },
         }
 

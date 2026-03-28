@@ -20,10 +20,14 @@
         <dd>{{ profile.phone|escape }}</dd>
       {% endif %}
     </dl>
-    {% if dashboard_copy.primary_action_url %}
-      <p>
-        <a href="{{ dashboard_copy.primary_action_url }}">{{ dashboard_copy.primary_action_label|escape }}</a>
-      </p>
+    {% if dashboard_copy.actions %}
+      <div class="dashboard-actions">
+        {% for action in dashboard_copy.actions %}
+          <a href="{{ action.url }}" class="btn">
+            {{ action.label|escape }}
+          </a>
+        {% endfor %}
+      </div>
     {% endif %}
     <form method="post" action="{% url 'accounts:logout' %}">
       {% csrf_token %}
