@@ -114,6 +114,21 @@ def expire_stale_tokens(reference_time: datetime | None = None) -> int:
         expires_at__lt=reference_time,
     ).update(status=Token.Status.EXPIRED, updated_at=reference_time)
 
+def delete_expired_slots(reference_time=None):
+    reference_time = reference_time or timezone.now()
+
+    slots = Slot.objects.all()
+    deletable_ids = []
+
+    for slot in slots:
+        slot_end = datetime.combine(slot.date, slot.end_time)
+        slot_end = timezone.make_aware(slot_end)
+
+        if slot_end < reference_time - timedelta(hours=1):
+            deletable_ids.append(slot.id)
+
+    return Slot.objects.filter(id__in=deletable_ids).delete()[0]
+
 
 def get_queue_snapshot(token: Token) -> dict[str, int | str]:
     """Return the student's live queue metrics for a token."""
