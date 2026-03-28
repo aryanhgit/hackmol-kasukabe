@@ -12,7 +12,22 @@ from django.views.generic import FormView, TemplateView
 from accounts.models import UserProfile
 from calendar_app.forms import DispensaryScheduleForm
 from calendar_app.models import DispensarySchedule
+from core.constants import (
+    DEFAULT_DISPENSARY_CLOSE_TIME,
+    DEFAULT_DISPENSARY_OPEN_TIME,
+    DISPENSARY_DETAIL_DEFAULT,
+)
 from core.decorators import RoleRequiredMixin
+
+
+def build_default_schedule_payload() -> dict[str, object]:
+    """Return the default schedule shown for days without a custom entry."""
+    return {
+        'is_open': True,
+        'open_time': DEFAULT_DISPENSARY_OPEN_TIME,
+        'close_time': DEFAULT_DISPENSARY_CLOSE_TIME,
+        'note': DISPENSARY_DETAIL_DEFAULT,
+    }
 
 
 class CalendarMonthView(LoginRequiredMixin, TemplateView):
@@ -51,13 +66,15 @@ class CalendarMonthView(LoginRequiredMixin, TemplateView):
             week_days = []
             for day in week:
                 schedule = schedule_map.get(day)
+                has_custom_schedule = schedule is not None
                 week_days.append(
                     {
                         'date': day,
                         'day_number': day.day,
                         'in_current_month': day.month == reference_date.month,
                         'is_today': day == timezone.localdate(),
-                        'schedule': schedule,
+                        'schedule': schedule or build_default_schedule_payload(),
+                        'has_custom_schedule': has_custom_schedule,
                     }
                 )
             weeks.append(week_days)
@@ -106,6 +123,8 @@ class ScheduleManageView(LoginRequiredMixin, RoleRequiredMixin, FormView):
         if schedule is None:
             initial['date'] = self.get_selected_date()
             initial['is_open'] = True
+            initial['open_time'] = DEFAULT_DISPENSARY_OPEN_TIME
+            initial['close_time'] = DEFAULT_DISPENSARY_CLOSE_TIME
         return kwargs
 
     def form_valid(self, form):
@@ -121,6 +140,7 @@ class ScheduleManageView(LoginRequiredMixin, RoleRequiredMixin, FormView):
                 'selected_date': selected_date,
                 'existing_schedule': self.get_existing_schedule(),
                 'recent_schedules': DispensarySchedule.objects.order_by('-date')[:10],
+                'default_schedule_preview': build_default_schedule_payload(),
             }
         )
         return context
