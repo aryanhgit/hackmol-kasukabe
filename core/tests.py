@@ -44,13 +44,14 @@ class CoreTemplateUtilityTests(TestCase):
 
         self.assertEqual(rendered, 'student-zone')
 
-    def test_dispensary_status_returns_closed_when_today_has_no_schedule(self):
+    def test_dispensary_status_returns_default_open_when_today_has_no_schedule(self):
         request = self.factory.get('/')
 
         context = dispensary_status(request)
 
-        self.assertEqual(context['dispensary_status']['label'], 'Closed today')
-        self.assertFalse(context['dispensary_status']['is_open'])
+        self.assertEqual(context['dispensary_status']['label'], 'Open today')
+        self.assertTrue(context['dispensary_status']['is_open'])
+        self.assertEqual(context['dispensary_status']['detail'], 'Default hours: 9:00 AM to 5:00 PM')
 
 
 class DemoSeedCommandTests(TestCase):
