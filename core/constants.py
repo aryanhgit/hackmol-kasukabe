@@ -1,4 +1,3 @@
-# campuscare/core/constants.py — Step 8
 from decouple import config
 
 DISPENSARY_STATUS_OPEN = 'Open today'

@@ -1,4 +1,3 @@
-# campuscare/core/context_processors.py — Step 4
 from django.apps import apps
 from django.db import OperationalError, ProgrammingError
 from django.utils import timezone

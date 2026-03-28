@@ -35,7 +35,7 @@ def role_required(*allowed_roles: str) -> Callable:
 
 
 class RoleRequiredMixin(UserPassesTestMixin):
-    """Class-based views mixin that restricts access to users with allowed roles."""
+    """Class Based Views mixin that restricts access to users with allowed roles."""
 
     allowed_roles: tuple[str, ...] = ()
 
