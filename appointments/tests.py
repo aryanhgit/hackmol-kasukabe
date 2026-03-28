@@ -1,4 +1,3 @@
-# campuscare/appointments/tests.py — Step 5
 from datetime import time, timedelta
 
 from django.contrib.auth import get_user_model
@@ -84,3 +83,40 @@ class AppointmentBookingTests(TestCase):
 
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.json()['queue_position'], 1)
+
+    def test_admin_can_create_slot_from_main_page(self):
+        admin_user = User.objects.create_superuser(
+            username='slot-admin',
+            email='slot-admin@example.com',
+            password='safe-pass-123',
+        )
+        self.client.force_login(admin_user)
+
+        response = self.client.post(
+            reverse('appointments:slot_list'),
+            data={
+                'slot-title': 'Afternoon Checkup',
+                'slot-date': str(timezone.localdate() + timedelta(days=2)),
+                'slot-start_time': '14:00',
+                'slot-end_time': '14:30',
+                'slot-max_capacity': '4',
+                'slot-notes': 'Created from the main appointments page',
+            },
+        )
+
+        self.assertRedirects(response, reverse('appointments:slot_list'))
+        self.assertTrue(Slot.objects.filter(title='Afternoon Checkup').exists())
+
+    def test_admin_slot_list_shows_create_form_not_booking_actions(self):
+        admin_user = User.objects.create_superuser(
+            username='slot-admin-view',
+            email='slot-admin-view@example.com',
+            password='safe-pass-123',
+        )
+        self.client.force_login(admin_user)
+
+        response = self.client.get(reverse('appointments:slot_list'))
+
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, 'Create a slot')
+        self.assertNotContains(response, 'Book this slot')
