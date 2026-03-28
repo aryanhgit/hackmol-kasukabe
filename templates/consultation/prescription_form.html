@@ -61,8 +61,9 @@
           <article class="medicine-row" data-formset-row>
             <div class="medicine-row__grid">
               <div>
-                <label for="id_medicines-__prefix__-medicine_name">Medicine name</label>
-                <input type="text" name="medicines-__prefix__-medicine_name" id="id_medicines-__prefix__-medicine_name" maxlength="120">
+                <label>Medicine name</label>
+                {{ medicine_formset.empty_form.medicine_name }}
+              
               </div>
               <div>
                 <label for="id_medicines-__prefix__-quantity">Quantity</label>

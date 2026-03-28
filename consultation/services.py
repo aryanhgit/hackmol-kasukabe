@@ -69,7 +69,7 @@ def prescribe_for_token(token: Token, doctor_profile: DoctorProfile, symptoms: s
     for medicine in medicines:
         PrescriptionMedicine.objects.create(
             prescription=prescription,
-            medicine_name=medicine['medicine_name'],
+            medicine_name=medicine['medicine'],
             dosage_instructions=medicine['dosage_instructions'],
             quantity=medicine['quantity'],
         )

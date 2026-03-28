@@ -9,6 +9,7 @@ from django.views.decorators.http import require_POST
 from django.views.generic import DetailView, TemplateView
 
 from accounts.models import UserProfile
+from inventory.models import Stock
 from appointments.models import Token
 from consultation.forms import PrescriptionForm, PrescriptionMedicineFormSet
 from consultation.models import Prescription
@@ -66,6 +67,18 @@ class PrescriptionCreateView(LoginRequiredMixin, RoleRequiredMixin, TemplateView
     allowed_roles = (UserProfile.Role.DOCTOR,)
     template_name = 'consultation/prescription_form.html'
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context.update(
+            {
+                'token': self.token,
+                'doctor_profile': self.doctor_profile,
+                'stocks': Stock.objects.select_related('medicine').filter(quantity__gt=0),  # 👈 ADD THIS
+                **kwargs,
+            }
+        )
+        return context
+
     def get_token(self):
         if not hasattr(self, '_token'):
             self._token = get_object_or_404(
@@ -104,7 +117,11 @@ class PrescriptionCreateView(LoginRequiredMixin, RoleRequiredMixin, TemplateView
 
         if prescription_form.is_valid() and medicine_formset.is_valid():
             medicines = [
-                cleaned_data
+                {
+                    "medicine": cleaned_data["medicine_name"].medicine,  # 👈 THIS LINE HERE
+                    "dosage_instructions": cleaned_data["dosage_instructions"],
+                    "quantity": cleaned_data["quantity"],
+                }
                 for cleaned_data in medicine_formset.cleaned_data
                 if cleaned_data and not cleaned_data.get('DELETE')
             ]
