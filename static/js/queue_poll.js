@@ -6,9 +6,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const endpoint = queueRoot.getAttribute('data-endpoint');
   const pollInterval = Number(queueRoot.getAttribute('data-poll-interval') || '15000');
+  const avgConsultMinutes = Number(queueRoot.getAttribute('data-avg-consult-minutes') || '0');
   const queuePosition = document.getElementById('queue-position');
   const waitingAhead = document.getElementById('waiting-ahead');
   const tokenStatus = document.getElementById('token-status');
+  const queueEta = document.getElementById('queue-eta');
 
   const updateQueue = async () => {
     try {
@@ -31,6 +33,9 @@ document.addEventListener('DOMContentLoaded', () => {
       }
       if (tokenStatus) {
         tokenStatus.textContent = String(payload.status).replace(/^\w/, (character) => character.toUpperCase());
+      }
+      if (queueEta) {
+        queueEta.textContent = String(Number(payload.waiting_ahead || 0) * avgConsultMinutes);
       }
     } catch (error) {
       window.console.debug('Queue polling failed', error);

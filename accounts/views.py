@@ -1,5 +1,3 @@
-# campuscare/accounts/views.py — Step 1
-# campuscare/accounts/views.py — Step 2
 from django.contrib import messages
 from django.contrib.auth import login
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -11,6 +9,13 @@ from django.views.generic import CreateView, TemplateView
 
 from accounts.forms import RegistrationForm, StudentRegistrationForm
 from accounts.models import UserProfile
+from accounts.services import (
+    build_admin_dashboard,
+    build_doctor_dashboard,
+    build_pharmacist_dashboard,
+    build_student_dashboard,
+)
+from core.constants import AVG_CONSULT_MINUTES, QUEUE_POLL_INTERVAL_MS
 from core.decorators import RoleRequiredMixin
 
 
@@ -72,7 +77,7 @@ class CampusCareLogoutView(LogoutView):
 
 
 class DashboardRedirectView(LoginRequiredMixin, RoleRequiredMixin, TemplateView):
-    """Show the user the appropriate starting point for their role."""
+    """Render a role-aware dashboard with live operational data."""
 
     template_name = 'accounts/dashboard_redirect.html'
     allowed_roles = tuple(UserProfile.Role.values)
@@ -80,34 +85,29 @@ class DashboardRedirectView(LoginRequiredMixin, RoleRequiredMixin, TemplateView)
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         profile = self.request.user.profile
+        context.update(
+            {
+                'profile': profile,
+                'is_student': profile.role == UserProfile.Role.STUDENT,
+                'is_doctor': profile.role == UserProfile.Role.DOCTOR,
+                'is_pharmacist': profile.role == UserProfile.Role.PHARMACIST,
+                'is_admin': profile.role == UserProfile.Role.ADMIN,
+                'queue_poll_interval_ms': QUEUE_POLL_INTERVAL_MS,
+                'avg_consult_minutes': AVG_CONSULT_MINUTES,
+            }
+        )
 
-        role_copy = {
-            UserProfile.Role.STUDENT: {
-                'heading': 'Student dashboard',
-                'summary': 'Book appointments and follow your token status as those modules come online.',
-                'actions': [],
-            },
-            UserProfile.Role.DOCTOR: {
-                'heading': 'Doctor dashboard',
-                'summary': 'Consultation tools will appear in the next steps. Your account is ready now.',
-                'actions': [],
-            },
-            UserProfile.Role.PHARMACIST: {
-                'heading': 'Pharmacist dashboard',
-                'summary': 'Dispense and inventory tools will be connected in later steps.',
-                'actions': [],
-            },
-            UserProfile.Role.ADMIN: {
-                'heading': 'Admin dashboard',
-                'summary': 'Use the Django admin while calendar, inventory, and analytics modules are added.',
-                'actions': [
-                    {'label': 'Open Admin', 'url': reverse('admin:index')},
-                    {'label': 'Register Student', 'url': reverse('accounts:register_student')},
-                    {'label': 'Register Doctor/Pharmacist', 'url': reverse('accounts:register')},
-                ],
-            },
-        }
-
-        context['profile'] = profile
-        context['dashboard_copy'] = role_copy[profile.role]
+        if profile.role == UserProfile.Role.STUDENT:
+            student_dashboard = build_student_dashboard(profile)
+            context['student_dashboard'] = student_dashboard
+            active_token = student_dashboard['active_token']
+            context['queue_endpoint'] = (
+                reverse('appointments:queue_count', kwargs={'token_id': active_token.pk}) if active_token else None
+            )
+        elif profile.role == UserProfile.Role.DOCTOR:
+            context['doctor_dashboard'] = build_doctor_dashboard(self.request.user)
+        elif profile.role == UserProfile.Role.PHARMACIST:
+            context['pharmacist_dashboard'] = build_pharmacist_dashboard(profile)
+        elif profile.role == UserProfile.Role.ADMIN:
+            context['admin_dashboard'] = build_admin_dashboard()
         return context
