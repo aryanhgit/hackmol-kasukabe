@@ -1,4 +1,4 @@
-# campuscare/inventory/apps.py — Step 1
+
 from django.apps import AppConfig
 
 

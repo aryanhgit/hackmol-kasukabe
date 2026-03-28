@@ -1,4 +1,4 @@
-# campuscare/inventory/forms.py — Step 8
+
 from django import forms
 
 from inventory.models import Medicine, Stock

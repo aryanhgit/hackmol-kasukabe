@@ -1,4 +1,4 @@
-# campuscare/inventory/models.py — Step 8
+
 from django.db import models
 
 
