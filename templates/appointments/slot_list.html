@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load crispy_forms_tags %}
 
 {% block title %}Appointment Slots — CampusCare{% endblock %}
 
@@ -6,12 +7,33 @@
   <section class="appointments-page" aria-labelledby="slot-list-heading">
     <header class="appointments-page__header">
       <div>
-        <p class="appointments-page__eyebrow">Student booking</p>
-        <h2 id="slot-list-heading">Available appointment slots</h2>
-        <p>Choose a slot, generate your QR token, and keep track of your queue position live.</p>
+        <p class="appointments-page__eyebrow">{% if is_admin %}Appointments admin{% else %}Student booking{% endif %}</p>
+        <h2 id="slot-list-heading">{% if is_admin %}Manage appointment slots{% else %}Available appointment slots{% endif %}</h2>
+        <p>
+          {% if is_admin %}
+            Create and review upcoming slots without leaving the main appointments page.
+          {% else %}
+            Choose a slot, generate your QR token, and keep track of your queue position live.
+          {% endif %}
+        </p>
       </div>
-      <a class="appointments-page__secondary" href="{% url 'appointments:my_token' %}">View my token</a>
+      {% if is_student %}
+        <a class="appointments-page__secondary" href="{% url 'appointments:my_token' %}">View my token</a>
+      {% else %}
+        <a class="appointments-page__secondary" href="{% url 'admin:index' %}">Open admin</a>
+      {% endif %}
     </header>
+
+    {% if is_admin %}
+      <article class="appointments-page__notice appointments-page__notice--form">
+        <h3>Create a slot</h3>
+        <form method="post">
+          {% csrf_token %}
+          {{ slot_form|crispy }}
+          <button type="submit">Create slot</button>
+        </form>
+      </article>
+    {% endif %}
 
     {% if active_token %}
       <article class="appointments-page__notice">
@@ -52,10 +74,12 @@
 
           <p class="slot-card__hint">{{ slot_card.booking_note|escape }}</p>
 
-          {% if slot_card.bookable and not active_token %}
+          {% if is_student and slot_card.bookable and not active_token %}
             <a class="slot-card__action" href="{% url 'appointments:book' slot_card.slot.pk %}">Book this slot</a>
-          {% elif active_token %}
+          {% elif is_student and active_token %}
             <a class="slot-card__action slot-card__action--muted" href="{% url 'appointments:my_token' %}">Track current token</a>
+          {% elif is_admin %}
+            <span class="slot-card__action slot-card__action--muted">Visible to students when bookable</span>
           {% else %}
             <span class="slot-card__action slot-card__action--muted">Booking unavailable</span>
           {% endif %}
