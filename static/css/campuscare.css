@@ -1,0 +1,253 @@
+:root {
+  --campuscare-ink: #10243d;
+  --campuscare-surface: rgba(255, 255, 255, 0.9);
+  --campuscare-surface-strong: #ffffff;
+  --campuscare-line: rgba(16, 36, 61, 0.12);
+  --campuscare-accent: #187b73;
+  --campuscare-accent-soft: #dff5f0;
+  --campuscare-warm: #f49d37;
+  --campuscare-shadow: 0 20px 45px rgba(15, 32, 54, 0.14);
+  --campuscare-radius: 24px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body.campuscare-shell {
+  margin: 0;
+  min-height: 100vh;
+  font-family: "Segoe UI", "Trebuchet MS", sans-serif;
+  color: var(--campuscare-ink);
+  background:
+    radial-gradient(circle at top left, rgba(24, 123, 115, 0.18), transparent 28rem),
+    radial-gradient(circle at bottom right, rgba(244, 157, 55, 0.2), transparent 26rem),
+    linear-gradient(160deg, #f5fbfc 0%, #eef5fb 48%, #fff8ef 100%);
+  position: relative;
+}
+
+.campuscare-shell__orb {
+  position: fixed;
+  width: 18rem;
+  height: 18rem;
+  border-radius: 50%;
+  filter: blur(18px);
+  opacity: 0.55;
+  pointer-events: none;
+}
+
+.campuscare-shell__orb--left {
+  top: -6rem;
+  left: -5rem;
+  background: rgba(24, 123, 115, 0.18);
+}
+
+.campuscare-shell__orb--right {
+  right: -4rem;
+  bottom: -5rem;
+  background: rgba(244, 157, 55, 0.22);
+}
+
+.campuscare-shell__frame {
+  position: relative;
+  z-index: 1;
+  padding: 1.25rem;
+}
+
+.campuscare-navbar {
+  background: rgba(255, 255, 255, 0.82);
+  backdrop-filter: blur(14px);
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  border-radius: calc(var(--campuscare-radius) + 4px);
+  box-shadow: var(--campuscare-shadow);
+}
+
+.campuscare-navbar__container {
+  gap: 1rem;
+  align-items: center;
+}
+
+.campuscare-navbar__brand {
+  color: var(--campuscare-ink);
+  text-decoration: none;
+  font-size: 1.4rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.campuscare-navbar__toggle {
+  border: none;
+}
+
+.campuscare-navbar__toggle-label {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--campuscare-ink);
+}
+
+.campuscare-navbar__collapse {
+  gap: 1.25rem;
+}
+
+.campuscare-navbar__status {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  margin: 0 auto;
+}
+
+.campuscare-navbar__detail {
+  color: rgba(16, 36, 61, 0.74);
+}
+
+.campuscare-navbar__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.35rem;
+}
+
+.campuscare-navbar__link {
+  color: var(--campuscare-ink);
+  font-weight: 600;
+}
+
+.campuscare-navbar__link--accent {
+  color: var(--campuscare-accent);
+}
+
+.campuscare-navbar__role {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem 0.9rem;
+  border-radius: 999px;
+  background: var(--campuscare-accent-soft);
+  color: var(--campuscare-accent);
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
+.dispensary-badge {
+  display: inline-flex;
+  width: fit-content;
+  align-items: center;
+  padding: 0.45rem 0.85rem;
+  border-radius: 999px;
+  font-size: 0.88rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+.dispensary-badge--open {
+  background: #dff5ea;
+  color: #187b49;
+}
+
+.dispensary-badge--closed {
+  background: #fde6e3;
+  color: #b44332;
+}
+
+.dispensary-badge--pending {
+  background: #fff1d7;
+  color: #9c6415;
+}
+
+.campuscare-main {
+  width: min(100%, 70rem);
+  margin: 1.5rem auto 0;
+}
+
+.campuscare-messages {
+  display: grid;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.campuscare-message {
+  padding: 0.95rem 1rem;
+  border-radius: 18px;
+  border: 1px solid var(--campuscare-line);
+  background: var(--campuscare-surface);
+  box-shadow: 0 12px 24px rgba(15, 32, 54, 0.08);
+}
+
+.campuscare-message--success {
+  border-color: rgba(24, 123, 115, 0.22);
+}
+
+.campuscare-message--error,
+.campuscare-message--warning {
+  border-color: rgba(180, 67, 50, 0.22);
+}
+
+.campuscare-panel {
+  padding: clamp(1.25rem, 4vw, 2.2rem);
+  border-radius: calc(var(--campuscare-radius) + 6px);
+  background: var(--campuscare-surface-strong);
+  border: 1px solid rgba(255, 255, 255, 0.9);
+  box-shadow: var(--campuscare-shadow);
+}
+
+.auth-page,
+.dashboard-page {
+  width: min(100%, 38rem);
+  margin: 0 auto;
+}
+
+.auth-page h2,
+.dashboard-page h2 {
+  margin-top: 0;
+  font-size: clamp(1.8rem, 5vw, 2.4rem);
+}
+
+.auth-page button,
+.dashboard-page button {
+  appearance: none;
+  border: none;
+  border-radius: 999px;
+  padding: 0.8rem 1.25rem;
+  background: linear-gradient(135deg, var(--campuscare-accent), #0f5e7d);
+  color: #ffffff;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.auth-page a,
+.dashboard-page a {
+  color: var(--campuscare-accent);
+  font-weight: 600;
+}
+
+.dashboard-page dl {
+  display: grid;
+  grid-template-columns: minmax(7rem, 10rem) 1fr;
+  gap: 0.6rem 1rem;
+}
+
+.dashboard-page dt {
+  font-weight: 700;
+}
+
+@media (max-width: 991.98px) {
+  .campuscare-navbar__status {
+    margin: 1rem 0;
+  }
+
+  .campuscare-navbar__actions {
+    justify-content: flex-start;
+  }
+}
+
+@media (max-width: 640px) {
+  .campuscare-shell__frame {
+    padding: 0.85rem;
+  }
+
+  .dashboard-page dl {
+    grid-template-columns: 1fr;
+  }
+}
