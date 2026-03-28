@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard — CampusCare{% endblock %}
+
+{% block content %}
+  <section class="dashboard-page" aria-labelledby="dashboard-heading">
+    <h2 id="dashboard-heading">{{ dashboard_copy.heading|escape }}</h2>
+    <p>{{ dashboard_copy.summary|escape }}</p>
+    <dl>
+      <dt>Name</dt>
+      <dd>{{ request.user.get_full_name|default:request.user.username|escape }}</dd>
+      <dt>Role</dt>
+      <dd>{{ profile.get_role_display|escape }}</dd>
+      {% if profile.roll_number %}
+        <dt>Roll number</dt>
+        <dd>{{ profile.roll_number|escape }}</dd>
+      {% endif %}
+      {% if profile.phone %}
+        <dt>Phone</dt>
+        <dd>{{ profile.phone|escape }}</dd>
+      {% endif %}
+    </dl>
+    {% if dashboard_copy.primary_action_url %}
+      <p>
+        <a href="{{ dashboard_copy.primary_action_url }}">{{ dashboard_copy.primary_action_label|escape }}</a>
+      </p>
+    {% endif %}
+    <form method="post" action="{% url 'accounts:logout' %}">
+      {% csrf_token %}
+      <button type="submit">Logout</button>
+    </form>
+  </section>
+{% endblock %}
