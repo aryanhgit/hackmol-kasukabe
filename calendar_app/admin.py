@@ -1,4 +1,3 @@
-# campuscare/calendar_app/admin.py — Step 4
 from django.contrib import admin
 
 from calendar_app.models import DispensarySchedule

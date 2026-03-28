@@ -1,4 +1,3 @@
-# campuscare/calendar_app/forms.py — Step 4
 from django import forms
 
 from calendar_app.models import DispensarySchedule

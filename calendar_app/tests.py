@@ -1,4 +1,3 @@
-# campuscare/calendar_app/tests.py — Step 4
 from datetime import time
 
 from django.contrib.auth import get_user_model

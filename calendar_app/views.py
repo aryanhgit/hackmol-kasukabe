@@ -1,4 +1,3 @@
-# campuscare/calendar_app/views.py — Step 4
 from calendar import Calendar, month_name, monthrange
 from datetime import date, timedelta
 

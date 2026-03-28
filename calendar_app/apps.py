@@ -1,4 +1,3 @@
-# campuscare/calendar_app/apps.py — Step 1
 from django.apps import AppConfig
 
 

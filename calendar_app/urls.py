@@ -1,4 +1,3 @@
-# campuscare/calendar_app/urls.py — Step 4
 from django.urls import path
 
 from calendar_app.views import CalendarMonthView, ScheduleManageView

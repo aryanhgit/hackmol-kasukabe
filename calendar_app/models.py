@@ -1,4 +1,3 @@
-# campuscare/calendar_app/models.py — Step 4
 from django.core.exceptions import ValidationError
 from django.db import models
 
