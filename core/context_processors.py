@@ -3,12 +3,15 @@ from django.db import OperationalError, ProgrammingError
 from django.utils import timezone
 
 from core.constants import (
+    DEFAULT_DISPENSARY_CLOSE_TIME,
+    DEFAULT_DISPENSARY_OPEN_TIME,
     DISPENSARY_BADGE_CLOSED,
     DISPENSARY_BADGE_OPEN,
     DISPENSARY_BADGE_PENDING,
     DISPENSARY_DETAIL_CLOSED,
+    DISPENSARY_DETAIL_DEFAULT,
     DISPENSARY_DETAIL_OPEN,
-    DISPENSARY_DETAIL_PENDING,
+    DISPENSARY_DETAIL_PENDING,  
     DISPENSARY_STATUS_CLOSED,
     DISPENSARY_STATUS_OPEN,
     DISPENSARY_STATUS_PENDING,
@@ -37,10 +40,13 @@ def dispensary_status(request) -> dict[str, dict[str, str | bool]]:
     if schedule is None:
         return {
             'dispensary_status': {
-                'label': DISPENSARY_STATUS_CLOSED,
-                'detail': DISPENSARY_DETAIL_CLOSED,
-                'badge_class': DISPENSARY_BADGE_CLOSED,
-                'is_open': False,
+                'label': DISPENSARY_STATUS_OPEN,
+                'detail': (
+                    f"Default hours: {DEFAULT_DISPENSARY_OPEN_TIME.strftime('%I:%M %p').lstrip('0')} "
+                    f"to {DEFAULT_DISPENSARY_CLOSE_TIME.strftime('%I:%M %p').lstrip('0')}"
+                ),
+                'badge_class': DISPENSARY_BADGE_OPEN,
+                'is_open': True,
             }
         }
 
@@ -51,7 +57,7 @@ def dispensary_status(request) -> dict[str, dict[str, str | bool]]:
                 f"Open {schedule.open_time.strftime('%I:%M %p').lstrip('0')} "
                 f"to {schedule.close_time.strftime('%I:%M %p').lstrip('0')}"
             )
-        detail = detail or DISPENSARY_DETAIL_OPEN
+        detail = detail or DISPENSARY_DETAIL_OPEN or DISPENSARY_DETAIL_DEFAULT
         return {
             'dispensary_status': {
                 'label': DISPENSARY_STATUS_OPEN,
