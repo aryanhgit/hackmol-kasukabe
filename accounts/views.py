@@ -116,4 +116,8 @@ class DashboardRedirectView(LoginRequiredMixin, RoleRequiredMixin, TemplateView)
         context['profile'] = profile
         context['dashboard_copy'] = role_copy.get(profile.role, {})
 
+        context['is_student'] = profile.role == UserProfile.Role.STUDENT
+        context['is_doctor'] = profile.role == UserProfile.Role.DOCTOR
+        context['is_pharmacist'] = profile.role == UserProfile.Role.PHARMACIST
+
         return context

@@ -368,13 +368,15 @@
     </article>
 
     <article class="dashboard-card">
-      <div class="dashboard-card__top">
-        <div>
-          <p class="dashboard-card__eyebrow">Inventory watch</p>
-          <h3>Low-stock items</h3>
+      {% if not is_student %}
+        <div class="dashboard-card__top">
+          <div>
+            <p class="dashboard-card__eyebrow">Inventory watch</p>
+            <h3>Low-stock items</h3>
+          </div>
+          <a class="dashboard-card__action" href="{% url 'inventory:alerts' %}">View alerts</a>
         </div>
-        <a class="dashboard-card__action" href="{% url 'inventory:alerts' %}">View alerts</a>
-      </div>
+      {% endif %}
       <div class="dashboard-stack">
         {% for stock in admin_dashboard.low_stock_items %}
         <article class="dashboard-list-card">
