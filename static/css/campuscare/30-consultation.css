@@ -1,0 +1,197 @@
+.consultation-page__header,
+.prescription-page__header,
+.print-page__header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.consultation-page__eyebrow,
+.prescription-page__eyebrow,
+.print-page__eyebrow {
+  margin: 0 0 0.35rem;
+  color: var(--campuscare-accent);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.consultation-page__action,
+.prescription-page__back,
+.print-page__button,
+.consultation-page__queue a,
+.prescription-page__add {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: fit-content;
+  padding: 0.72rem 1rem;
+  border: none;
+  border-radius: 999px;
+  background: rgba(24, 123, 115, 0.1);
+  color: var(--campuscare-accent);
+  text-decoration: none;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.consultation-page__layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(18rem, 0.9fr);
+  gap: 1rem;
+}
+
+.consultation-page__panel,
+.prescription-page__panel,
+.prescription-page__token,
+.print-page__sheet {
+  padding: 1.15rem;
+  border: 1px solid var(--campuscare-line);
+  border-radius: 22px;
+  background: rgba(255, 255, 255, 0.88);
+}
+
+.doctor-grid {
+  display: grid;
+  gap: 0.85rem;
+}
+
+.doctor-card {
+  padding: 1rem;
+  border-radius: 18px;
+  background: rgba(16, 36, 61, 0.05);
+}
+
+.doctor-card__top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.85rem;
+}
+
+.doctor-card__top h4,
+.doctor-card__top p {
+  margin: 0;
+}
+
+.doctor-card__status {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.35rem 0.65rem;
+  border-radius: 999px;
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+
+.doctor-card__status--open {
+  background: #dff5ea;
+  color: #187b49;
+}
+
+.doctor-card__status--closed {
+  background: #fde6e3;
+  color: #b44332;
+}
+
+.consultation-page__queue {
+  display: grid;
+  gap: 0.85rem;
+  padding-left: 0;
+  list-style: none;
+}
+
+.consultation-page__queue li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.85rem 0;
+  border-bottom: 1px solid var(--campuscare-line);
+}
+
+.consultation-page__queue li p {
+  margin: 0.25rem 0 0;
+}
+
+.prescription-page__token {
+  margin-bottom: 1rem;
+}
+
+.prescription-page__panel-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.prescription-page__form {
+  display: grid;
+  gap: 1rem;
+}
+
+.medicine-row {
+  padding: 1rem;
+  border-radius: 18px;
+  background: rgba(16, 36, 61, 0.05);
+}
+
+.medicine-row + .medicine-row {
+  margin-top: 0.85rem;
+}
+
+.medicine-row__grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.9rem;
+}
+
+.medicine-row__grid label,
+.medicine-row__delete {
+  display: block;
+  margin-bottom: 0.35rem;
+  font-weight: 600;
+}
+
+.medicine-row__full {
+  grid-column: 1 / -1;
+}
+
+.medicine-row__grid input {
+  width: 100%;
+}
+
+.medicine-row__delete {
+  margin-top: 0.75rem;
+}
+
+.print-page__row {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.print-page__row p {
+  margin-bottom: 0;
+}
+
+.print-page__section {
+  margin-top: 1.25rem;
+}
+
+.print-page__table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.print-page__table th,
+.print-page__table td {
+  padding: 0.75rem;
+  border-bottom: 1px solid var(--campuscare-line);
+  text-align: left;
+}
+

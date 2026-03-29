@@ -1,0 +1,117 @@
+/* inventory-page: stock catalog and low-stock workspace */
+.inventory-page__header,
+.inventory-form-page__header {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  align-items: flex-start;
+  margin-bottom: 1.5rem;
+}
+
+.inventory-page__eyebrow,
+.inventory-form-page__eyebrow {
+  margin: 0 0 0.35rem;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  font-size: 0.75rem;
+  color: #0f5e7d;
+}
+
+.inventory-page__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.inventory-page__actions a,
+.inventory-form-page__header a,
+.inventory-form-page__form button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  border-radius: 999px;
+  padding: 0.75rem 1.15rem;
+  background: linear-gradient(135deg, #0f5e7d, #187b73);
+  color: #fff;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.inventory-alerts {
+  display: grid;
+  grid-template-columns: minmax(15rem, 18rem) 1fr;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.inventory-alerts__card,
+.inventory-alerts__item,
+.inventory-form-page__panel {
+  background: rgba(255, 255, 255, 0.94);
+  border: 1px solid rgba(15, 94, 125, 0.14);
+  border-radius: 1.2rem;
+  padding: 1.2rem;
+  box-shadow: 0 16px 34px rgba(15, 32, 54, 0.08);
+}
+
+.inventory-alerts__list {
+  display: grid;
+  gap: 0.8rem;
+}
+
+.inventory-alerts__item {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  align-items: center;
+}
+
+.inventory-alerts__empty {
+  margin: 0;
+  display: flex;
+  align-items: center;
+}
+
+.inventory-table table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.inventory-table th,
+.inventory-table td {
+  padding: 0.85rem 0.75rem;
+  text-align: left;
+  border-bottom: 1px solid rgba(15, 94, 125, 0.12);
+}
+
+.inventory-table__quantity {
+  display: inline-flex;
+  min-width: 2.5rem;
+  justify-content: center;
+  padding: 0.35rem 0.7rem;
+  border-radius: 999px;
+  background: #e6f3fa;
+  color: #0f5e7d;
+  font-weight: 700;
+}
+
+.inventory-table__quantity--low {
+  background: #fde6e3;
+  color: #9a2d1f;
+}
+
+.inventory-form-page__form {
+  display: grid;
+  gap: 1rem;
+}
+
+@media (max-width: 900px) {
+  .inventory-page__header,
+  .inventory-form-page__header,
+  .inventory-alerts {
+    grid-template-columns: 1fr;
+    flex-direction: column;
+  }
+}
+

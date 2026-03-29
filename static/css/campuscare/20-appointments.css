@@ -1,0 +1,194 @@
+.appointments-page__header,
+.booking-page__header,
+.token-page__header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.appointments-page__eyebrow,
+.booking-page__eyebrow,
+.token-page__eyebrow {
+  margin: 0 0 0.35rem;
+  color: var(--campuscare-accent);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.appointments-page__secondary,
+.booking-page__back,
+.token-page__back,
+.slot-card__action {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: fit-content;
+  padding: 0.72rem 1rem;
+  border-radius: 999px;
+  background: rgba(24, 123, 115, 0.1);
+  color: var(--campuscare-accent);
+  text-decoration: none;
+  font-weight: 700;
+}
+
+.slot-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.slot-card,
+.appointments-page__notice,
+.booking-page__panel,
+.token-page__panel {
+  padding: 1.15rem;
+  border: 1px solid var(--campuscare-line);
+  border-radius: 22px;
+  background: rgba(255, 255, 255, 0.88);
+}
+
+.appointments-page__notice--form form button {
+  appearance: none;
+  border: none;
+  border-radius: 999px;
+  padding: 0.8rem 1.25rem;
+  background: linear-gradient(135deg, var(--campuscare-accent), #0f5e7d);
+  color: #ffffff;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.slot-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+.slot-card__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.slot-card__title {
+  margin: 0 0 0.35rem;
+  color: var(--campuscare-accent);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.slot-card__header h3 {
+  margin: 0;
+}
+
+.slot-card__status {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.35rem 0.65rem;
+  border-radius: 999px;
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+
+.slot-card__status--open {
+  background: #dff5ea;
+  color: #187b49;
+}
+
+.slot-card__status--closed {
+  background: #fde6e3;
+  color: #b44332;
+}
+
+.slot-card__meta,
+.booking-page__meta,
+.token-page__meta {
+  display: grid;
+  grid-template-columns: minmax(7rem, 9rem) 1fr;
+  gap: 0.5rem 0.9rem;
+  margin: 0;
+}
+
+.slot-card__meta dt,
+.booking-page__meta dt,
+.token-page__meta dt {
+  font-weight: 700;
+}
+
+.slot-card__meta dd,
+.booking-page__meta dd,
+.token-page__meta dd {
+  margin: 0;
+}
+
+.slot-card__hint,
+.booking-page__hint {
+  margin: 0;
+  color: rgba(16, 36, 61, 0.82);
+}
+
+.slot-card__action {
+  margin-top: auto;
+}
+
+.slot-card__action--muted {
+  background: rgba(16, 36, 61, 0.08);
+  color: rgba(16, 36, 61, 0.72);
+}
+
+.booking-page__layout,
+.token-page__layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 1rem;
+}
+
+.token-page__panel--qr {
+  align-items: center;
+  text-align: center;
+}
+
+.token-page__qr {
+  width: min(100%, 18rem);
+  border-radius: 22px;
+  border: 1px solid var(--campuscare-line);
+  background: #ffffff;
+  padding: 0.85rem;
+}
+
+.token-page__code {
+  margin: 1rem 0 0.35rem;
+  font-weight: 800;
+  word-break: break-word;
+}
+
+.token-page__status {
+  margin: 0;
+}
+
+.token-page__queue {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.85rem;
+  margin-top: 1rem;
+}
+
+.token-page__queue-card {
+  padding: 1rem;
+  border-radius: 18px;
+  background: rgba(16, 36, 61, 0.05);
+}
+
+.token-page__queue-label {
+  display: block;
+  margin-bottom: 0.45rem;
+  color: rgba(16, 36, 61, 0.72);
+}
+

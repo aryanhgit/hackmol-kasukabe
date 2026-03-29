@@ -1,0 +1,173 @@
+@media (max-width: 991.98px) {
+  .campuscare-navbar__status {
+    margin: 1rem 0;
+  }
+
+  .campuscare-navbar__actions {
+    justify-content: flex-start;
+  }
+
+  .calendar-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .calendar-grid__weekday {
+    display: none;
+  }
+
+  .schedule-page__layout {
+    grid-template-columns: 1fr;
+  }
+
+  .slot-grid,
+  .booking-page__layout,
+  .token-page__layout,
+  .consultation-page__layout,
+  .dashboard-shell__metrics,
+  .dashboard-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .dashboard-card--wide {
+    grid-column: auto;
+  }
+}
+
+@media (max-width: 640px) {
+  .campuscare-shell__frame {
+    padding: 0.85rem;
+  }
+
+  .dashboard-page dl,
+  .dashboard-shell__identity,
+  .dashboard-detail-list {
+    grid-template-columns: 1fr;
+  }
+
+  .calendar-page__nav {
+    grid-template-columns: 1fr;
+  }
+
+  .calendar-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .slot-card__meta,
+  .booking-page__meta,
+  .token-page__meta,
+  .token-page__queue,
+  .medicine-row__grid,
+  .print-page__row {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 900px) {
+  .prediction-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 720px) {
+  .campuscare-shell__frame {
+    padding: 0.75rem;
+  }
+
+  .campuscare-main {
+    margin-top: 1rem;
+  }
+
+  .campuscare-panel {
+    padding: 1rem;
+  }
+
+  .campuscare-navbar__status {
+    margin: 0;
+  }
+
+  .campuscare-navbar__actions {
+    justify-content: flex-start;
+  }
+
+  .calendar-page__nav,
+  .calendar-grid,
+  .schedule-page__layout,
+  .appointments-page__layout,
+  .consultation-page__layout,
+  .pharmacy-page__layout,
+  .inventory-alerts,
+  .analytics-page__layout {
+    grid-template-columns: 1fr;
+  }
+
+  .calendar-grid {
+    gap: 0.5rem;
+  }
+
+  .calendar-grid__day {
+    min-height: 8.5rem;
+    padding: 0.75rem;
+  }
+
+  .inventory-table table,
+  .prediction-table table,
+  .print-page__table,
+  .receipt-page__table {
+    min-width: 36rem;
+  }
+
+  .print-page__brand,
+  .receipt-page__brand,
+  .print-page__header,
+  .receipt-page__header {
+    flex-direction: column;
+  }
+}
+
+@media print {
+  body.campuscare-shell {
+    background: #ffffff;
+    color: #000000;
+  }
+
+  .campuscare-shell__orb,
+  .campuscare-navbar,
+  .campuscare-messages,
+  .print-page__button,
+  .receipt-page__button {
+    display: none !important;
+  }
+
+  .campuscare-shell__frame,
+  .campuscare-main,
+  .campuscare-panel {
+    width: 100%;
+    max-width: none;
+    margin: 0;
+    padding: 0;
+    box-shadow: none;
+    border: none;
+    background: transparent;
+  }
+
+  .print-page__sheet,
+  .receipt-page__sheet {
+    box-shadow: none;
+    border: 1px solid #d8dde6;
+    border-radius: 0;
+    background: #ffffff;
+    page-break-inside: avoid;
+  }
+
+  .print-page__table,
+  .receipt-page__table,
+  .prediction-table table,
+  .inventory-table table {
+    min-width: 0;
+  }
+
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+}

@@ -1,0 +1,193 @@
+/* pharmacy-page: dispensing queue and receipt workspace */
+.pharmacy-page__header,
+.receipt-page__header {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  align-items: flex-start;
+  margin-bottom: 1.5rem;
+}
+
+.pharmacy-page__eyebrow,
+.receipt-page__eyebrow {
+  margin: 0 0 0.35rem;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  font-size: 0.75rem;
+  color: #7b4d2f;
+}
+
+.pharmacy-page__layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+  gap: 1.5rem;
+}
+
+.pharmacy-page__panel,
+.receipt-page__sheet {
+  background: rgba(255, 255, 255, 0.92);
+  border: 1px solid rgba(123, 77, 47, 0.15);
+  border-radius: 1.25rem;
+  padding: 1.5rem;
+  box-shadow: 0 20px 45px rgba(123, 77, 47, 0.08);
+}
+
+.pharmacy-page__queue {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0.9rem;
+}
+
+.pharmacy-page__queue li {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  align-items: flex-start;
+  padding: 1rem;
+  border-radius: 1rem;
+  background: #fff8f1;
+  border: 1px solid rgba(123, 77, 47, 0.12);
+}
+
+.pharmacy-page__queue-item--active {
+  outline: 2px solid rgba(123, 77, 47, 0.24);
+}
+
+.pharmacy-page__queue a,
+.receipt-page__button,
+.pharmacy-page__form button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  border-radius: 999px;
+  padding: 0.75rem 1.15rem;
+  background: linear-gradient(135deg, #7b4d2f, #b86a2f);
+  color: #fff;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.pharmacy-page__summary p,
+.pharmacy-page__quota p {
+  margin-bottom: 0.65rem;
+}
+
+.pharmacy-page__quota {
+  margin: 1.25rem 0;
+  padding: 1rem 1.1rem;
+  border-radius: 1rem;
+  background: #fff5eb;
+}
+
+.pharmacy-page__quota-status {
+  margin: 0;
+  font-weight: 600;
+}
+
+.pharmacy-page__quota-status--ok {
+  color: #23613f;
+}
+
+.pharmacy-page__quota-status--blocked {
+  color: #9a2d1f;
+}
+
+.pharmacy-page__medicines ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 0.8rem;
+}
+
+.pharmacy-page__medicines li {
+  display: grid;
+  gap: 0.2rem;
+  padding: 0.95rem 1rem;
+  border-radius: 1rem;
+  background: #fffaf5;
+  border: 1px solid rgba(123, 77, 47, 0.12);
+}
+
+.pharmacy-page__form {
+  margin-top: 1.25rem;
+}
+
+.receipt-page__meta {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+  margin-bottom: 1.4rem;
+}
+
+.receipt-page__section + .receipt-page__section {
+  margin-top: 1.4rem;
+}
+
+.receipt-page__table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.receipt-page__table th,
+.receipt-page__table td {
+  padding: 0.8rem 0.75rem;
+  border-bottom: 1px solid rgba(123, 77, 47, 0.14);
+  text-align: left;
+}
+
+.print-page__brand,
+.receipt-page__brand {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  align-items: flex-start;
+  margin-bottom: 1.25rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid rgba(16, 36, 61, 0.1);
+}
+
+.print-page__brand p,
+.receipt-page__brand p {
+  margin: 0.25rem 0 0;
+  color: rgba(16, 36, 61, 0.72);
+}
+
+.print-page__footer,
+.receipt-page__footer {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.5rem;
+  margin-top: 1.75rem;
+}
+
+.print-page__footer div,
+.receipt-page__footer div {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.print-page__footer span,
+.receipt-page__footer span {
+  display: block;
+  border-bottom: 1px solid rgba(16, 36, 61, 0.45);
+  min-height: 1.25rem;
+}
+
+@media (max-width: 900px) {
+  .pharmacy-page__layout,
+  .receipt-page__meta,
+  .print-page__footer,
+  .receipt-page__footer {
+    grid-template-columns: 1fr;
+  }
+
+  .pharmacy-page__header,
+  .receipt-page__header {
+    flex-direction: column;
+  }
+}
+
