@@ -6,7 +6,7 @@ from django.http import JsonResponse
 from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse
 from django.utils import timezone
-from django.views.generic import FormView, ListView, TemplateView
+from django.views.generic import FormView, ListView, TemplateView, UpdateView
 
 from accounts.models import UserProfile
 from appointments.forms import SlotBookingForm, SlotCreateForm
@@ -19,7 +19,6 @@ from appointments.services import (
     get_queue_snapshot,
     is_slot_bookable,
     slot_booking_note,
-    delete_expired_slots
 )
 from core.constants import QUEUE_POLL_INTERVAL_MS
 from core.decorators import RoleRequiredMixin, role_required
@@ -35,7 +34,6 @@ class SlotListView(LoginRequiredMixin, RoleRequiredMixin, ListView):
 
     def get_queryset(self):
         expire_stale_tokens()
-        delete_expired_slots()
         return Slot.objects.filter(date__gte=timezone.localdate()).order_by('date', 'start_time')
 
     def get_context_data(self, **kwargs):
@@ -83,7 +81,6 @@ class BookSlotView(LoginRequiredMixin, RoleRequiredMixin, FormView):
 
     def dispatch(self, request, *args, **kwargs):
         expire_stale_tokens()
-        delete_expired_slots()
         self.slot = get_object_or_404(Slot, pk=kwargs['slot_id'])
         return super().dispatch(request, *args, **kwargs)
 
@@ -107,6 +104,35 @@ class BookSlotView(LoginRequiredMixin, RoleRequiredMixin, FormView):
         return context
 
 
+class SlotUpdateView(LoginRequiredMixin, RoleRequiredMixin, UpdateView):
+    """Allow admins to update an existing slot from the appointments area."""
+
+    allowed_roles = (UserProfile.Role.ADMIN,)
+    model = Slot
+    form_class = SlotCreateForm
+    template_name = 'appointments/slot_form.html'
+    pk_url_kwarg = 'slot_id'
+
+    def get_success_url(self) -> str:
+        return reverse('appointments:slot_list')
+
+    def form_valid(self, form):
+        slot = form.save()
+        messages.success(self.request, f'Slot "{slot.title}" was updated successfully.')
+        return redirect(self.get_success_url())
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context.update(
+            {
+                'slot': self.object,
+                'page_heading': 'Edit slot',
+                'page_summary': 'Update appointment timing, capacity, or notes for this slot.',
+            }
+        )
+        return context
+
+
 class MyTokenView(LoginRequiredMixin, RoleRequiredMixin, TemplateView):
     """Render the current token and its live queue state."""
 
@@ -127,7 +153,6 @@ class MyTokenView(LoginRequiredMixin, RoleRequiredMixin, TemplateView):
 def queue_count_view(request, token_id):
     """Return live queue data for the student's token."""
     expire_stale_tokens()
-    delete_expired_slots()
     token = get_object_or_404(Token, pk=token_id)
 
     if request.user.profile.role != UserProfile.Role.ADMIN and token.student_id != request.user.profile.pk:

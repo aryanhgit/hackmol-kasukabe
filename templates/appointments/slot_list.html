@@ -74,15 +74,18 @@
 
           <p class="slot-card__hint">{{ slot_card.booking_note|escape }}</p>
 
-          {% if is_student and slot_card.bookable and not active_token %}
-            <a class="slot-card__action" href="{% url 'appointments:book' slot_card.slot.pk %}">Book this slot</a>
-          {% elif is_student and active_token %}
-            <a class="slot-card__action slot-card__action--muted" href="{% url 'appointments:my_token' %}">Track current token</a>
-          {% elif is_admin %}
-            <span class="slot-card__action slot-card__action--muted">Visible to students when bookable</span>
-          {% else %}
-            <span class="slot-card__action slot-card__action--muted">Booking unavailable</span>
-          {% endif %}
+          <div class="slot-card__actions">
+            {% if is_student and slot_card.bookable and not active_token %}
+              <a class="slot-card__action" href="{% url 'appointments:book' slot_card.slot.pk %}">Book this slot</a>
+            {% elif is_student and active_token %}
+              <a class="slot-card__action slot-card__action--muted" href="{% url 'appointments:my_token' %}">Track current token</a>
+            {% elif is_admin %}
+              <a class="slot-card__action" href="{% url 'appointments:edit_slot' slot_card.slot.pk %}">Edit slot</a>
+              <span class="slot-card__action slot-card__action--muted">Visible to students when bookable</span>
+            {% else %}
+              <span class="slot-card__action slot-card__action--muted">Booking unavailable</span>
+            {% endif %}
+          </div>
         </article>
       {% empty %}
         <article class="appointments-page__notice">
